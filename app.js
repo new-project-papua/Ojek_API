@@ -3,8 +3,9 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
+require('dotenv').config()
 
-mongoose.connect('mongodb://localhost/ojek_dev', { useMongoClient: true })
+mongoose.connect(`${process.env.DB_HOST}/${process.env.DB_NAME}`, { useMongoClient: true })
 
 const index = require('./routes/index')
 
