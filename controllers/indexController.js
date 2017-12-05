@@ -46,8 +46,15 @@ module.exports = {
   },
   emailVerification: (req, res) => {
     const data_register = jwt.verify(req.query.encoded, process.env.JWT_SECRET)
-    res.send({
-      data_register: data_register
+
+    User.update({
+      email: data_register.email
+    }, {
+      is_verified: true
     })
+    .then(() => {
+      res.send('email verification success.')
+    })
+    .catch(err => res.send(err))
   }
 }
