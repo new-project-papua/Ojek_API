@@ -4,7 +4,7 @@ module.exports = {
   isRegistered: (req, res, next) => {
     User.find({
       email: req.body.email,
-      is_validated: true
+      is_verified: true
     })
     .then(result => {
       if (result.length == 0) {
