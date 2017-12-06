@@ -1,6 +1,5 @@
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs')
-const nodemailer = require('nodemailer')
 const sgMail = require('@sendgrid/mail')
 const jwt = require('jsonwebtoken')
 
@@ -33,7 +32,7 @@ module.exports = {
         from: 'no-reply@ojekpancasila.com',
         subject: 'Email Verification',
         text: 'Please click link below to verify your account.',
-        html: `<p>Click <a href="http://35.198.217.74/verify?encoded=${data_register_encoded}">here</a> to verify your account.</p>`
+        html: `<p>Click <a href="${process.env.API_HOST}/verify?encoded=${data_register_encoded}">here</a> to verify your account.</p>`
       }
       sgMail.send(msg)
 
