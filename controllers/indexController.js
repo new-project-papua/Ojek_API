@@ -55,5 +55,40 @@ module.exports = {
       res.send('email verification success.')
     })
     .catch(err => res.send(err))
+  },
+  login: (req, res) => {
+    User.findOne({
+      username: req.body.username,
+      is_verified: true
+    })
+    .then(user => {
+      if (user == null) {
+        res.send({
+          message: 'username not found'
+        })
+      } else {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+          const token = jwt.sign({
+            _id: user._id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            birth_date: user.birth_date,
+            email: user.email,
+            phone: user.phone,
+            is_verified: user.is_verified,
+            username: user.username
+          }, process.env.JWT_SECRET)
+          res.send({
+            message: 'login success',
+            token: token
+          })
+        } else {
+          res.send({
+            message: 'password incorrect'
+          })
+        }
+      }
+    })
+    .catch(err => res.send(err))
   }
 }
