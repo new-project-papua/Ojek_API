@@ -18,6 +18,7 @@ module.exports = {
     User.create(req.body)
     .then(data => {
       const data_register = {
+        _id: data._id,
         first_name: data.first_name,
         last_name: data.last_name,
         birth_date: data.birth_date,
@@ -48,12 +49,12 @@ module.exports = {
     const data_register = jwt.verify(req.query.encoded, process.env.JWT_SECRET)
 
     User.update({
-      email: data_register.email
+      _id: data_register._id
     }, {
       email_verified: true
     })
     .then(() => {
-      res.send('email verification success.')
+      res.send('email verification success. Thankyou :)')
     })
     .catch(err => res.send(err))
   },
@@ -113,6 +114,13 @@ module.exports = {
         data: user
       })
     })
+    .catch(err => res.send(err))
+  },
+  removeById: (req, res) => {
+    User.remove({
+      _id: req.params._id
+    })
+    .then(result => res.send(result))
     .catch(err => res.send(err))
   }
 }
