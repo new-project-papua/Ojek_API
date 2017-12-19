@@ -19,10 +19,6 @@ const driverSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  is_verified: {
-    type: Boolean,
-    required: true
-  },
   username: {
     type: String,
     required: true,
@@ -38,8 +34,24 @@ const driverSchema = new mongoose.Schema({
   no_stnk: {
     type: String
   },
-  no_kendaraan: {
+  no_polisi: {
     type: String
+  },
+  email_verified: {
+    type: Boolean,
+    required: true
+  },
+  phone_verified: {
+    type: Boolean,
+    required: true
+  },
+  sim_verified: {
+    type: Boolean,
+    required: true
+  },
+  stnk_verified: {
+    type: Boolean,
+    required: true
   }
 },
 {

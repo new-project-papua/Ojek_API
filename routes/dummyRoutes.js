@@ -6,4 +6,8 @@ router.get('/', dummyController.getAll)
 router.post('/', dummyController.bulkRegister)
 router.delete('/', dummyController.bulkDelete)
 
+router.get('/driver', dummyController.getAllDriver)
+router.post('/driver', dummyController.bulkRegisterDriver)
+router.delete('/driver', dummyController.bulkDeleteDriver)
+
 module.exports = router

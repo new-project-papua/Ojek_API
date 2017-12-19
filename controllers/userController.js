@@ -12,7 +12,8 @@ module.exports = {
     const hash = bcrypt.hashSync(req.body.password)
 
     req.body.password = hash
-    req.body.is_verified = false
+    req.body.email_verified = false
+    req.body.phone_verified = false
 
     User.create(req.body)
     .then(data => {
@@ -49,7 +50,7 @@ module.exports = {
     User.update({
       email: data_register.email
     }, {
-      is_verified: true
+      email_verified: true
     })
     .then(() => {
       res.send('email verification success.')
@@ -59,7 +60,7 @@ module.exports = {
   login: (req, res) => {
     User.findOne({
       username: req.body.username,
-      is_verified: true
+      email_verified: true
     })
     .then(user => {
       if (user == null) {
@@ -75,7 +76,8 @@ module.exports = {
             birth_date: user.birth_date,
             email: user.email,
             phone: user.phone,
-            is_verified: user.is_verified,
+            email_verified: user.email_verified,
+            phone_verified: user.phone_verified,
             username: user.username
           }, process.env.JWT_SECRET)
           res.send({
@@ -88,6 +90,28 @@ module.exports = {
           })
         }
       }
+    })
+    .catch(err => res.send(err))
+  },
+  all: (req, res) => {
+    User.find()
+    .then(users => {
+      res.send({
+        message: 'data found',
+        data: users
+      })
+    })
+    .catch(err => res.send(err))
+  },
+  byId: (req, res) => {
+    User.findOne({
+      _id: req.params._id
+    })
+    .then(user => {
+      res.send({
+        message: 'data found',
+        data: user
+      })
     })
     .catch(err => res.send(err))
   }

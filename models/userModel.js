@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  is_verified: {
+  email_verified: {
+    type: Boolean,
+    required: true
+  },
+  phone_verified: {
     type: Boolean,
     required: true
   },
