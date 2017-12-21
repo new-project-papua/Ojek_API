@@ -71,7 +71,7 @@ module.exports = {
     var result = []
     dummy_users.map(user => {
       const salt = bcrypt.genSaltSync(10)
-      const hash = bcrypt.hashSync(user.password)
+      const hash = bcrypt.hashSync(user.password, salt)
 
       user.password = hash
 
@@ -104,7 +104,7 @@ module.exports = {
     var result = []
     dummy_drivers.map(driver => {
       const salt = bcrypt.genSaltSync(10)
-      const hash = bcrypt.hashSync(driver.password)
+      const hash = bcrypt.hashSync(driver.password, salt)
 
       driver.password = hash
 

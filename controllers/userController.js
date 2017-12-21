@@ -9,7 +9,7 @@ module.exports = {
   },
   register: (req, res) => {
     const salt = bcrypt.genSaltSync(10)
-    const hash = bcrypt.hashSync(req.body.password)
+    const hash = bcrypt.hashSync(req.body.password, salt)
 
     req.body.password = hash
     req.body.email_verified = false
@@ -133,6 +133,33 @@ module.exports = {
       phone: req.body.phone
     })
     .then(result => res.send(result))
+    .catch(err => res.send(err))
+  },
+  changePassword: (req, res) => {
+    User.findOne({
+      _id: req.params._id
+    })
+    .then(user => {
+      bcrypt.compare(req.body.old_password, user.password)
+      .then(response => {
+        if (response == true) {
+          const salt = bcrypt.genSaltSync(10)
+          const hash = bcrypt.hashSync(req.body.new_password, salt)
+          User.update({
+            _id: user._id
+          }, {
+            password: hash
+          })
+          .then(result => {
+            res.send({
+              message: 'password updated',
+              data: result
+            })
+          })
+          .catch(err => res.send(err))
+        }
+      })
+    })
     .catch(err => res.send(err))
   }
 }
