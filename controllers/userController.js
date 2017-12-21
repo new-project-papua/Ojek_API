@@ -122,5 +122,17 @@ module.exports = {
     })
     .then(result => res.send(result))
     .catch(err => res.send(err))
+  },
+  updateById: (req, res) => {
+    User.update({
+      _id: req.params._id
+    }, {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      birth_date: req.body.birth_date,
+      phone: req.body.phone
+    })
+    .then(result => res.send(result))
+    .catch(err => res.send(err))
   }
 }

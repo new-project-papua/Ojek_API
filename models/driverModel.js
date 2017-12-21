@@ -52,6 +52,9 @@ const driverSchema = new mongoose.Schema({
   stnk_verified: {
     type: Boolean,
     required: true
+  },
+  credit: {
+    type: Number
   }
 },
 {

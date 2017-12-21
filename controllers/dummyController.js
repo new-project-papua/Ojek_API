@@ -44,7 +44,8 @@ const dummy_drivers = [
     email_verified: true,
     phone_verified: true,
     sim_verified: true,
-    stnk_verified: true
+    stnk_verified: true,
+    credit: 100000
   },
   {
     first_name: 'Jason',
@@ -60,7 +61,8 @@ const dummy_drivers = [
     email_verified: true,
     phone_verified: true,
     sim_verified: true,
-    stnk_verified: true
+    stnk_verified: true,
+    credit: 100000
   }
 ]
 
