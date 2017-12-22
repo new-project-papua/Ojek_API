@@ -55,6 +55,14 @@ const driverSchema = new mongoose.Schema({
   },
   credit: {
     type: Number
+  },
+  pangkalan: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Pangkalan'
+  },
+  pangkalan_verified: {
+    type: Boolean,
+    required: true
   }
 },
 {
