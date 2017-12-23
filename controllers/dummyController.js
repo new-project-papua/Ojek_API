@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const Driver = require('../models/driverModel')
+const Pangkalan = require('../models/pangkalanModel')
 const bcrypt = require('bcryptjs')
 const sgMail = require('@sendgrid/mail')
 const jwt = require('jsonwebtoken')
@@ -63,6 +64,17 @@ const dummy_drivers = [
     sim_verified: true,
     stnk_verified: true,
     credit: 100000
+  }
+]
+
+const dummy_pangkalan = [
+  {
+    name: 'polimak 2 asri',
+    coordinate: '{latitude: 0, longitude: 0}'
+  },
+  {
+    name: 'dolog santarossa',
+    coordinate: '{latitude: 0, longitude: 0}'
   }
 ]
 
@@ -130,6 +142,35 @@ module.exports = {
   },
   bulkDeleteDriver: (req, res) => {
     Driver.remove({})
+    .then(result => res.send(result))
+    .catch(err => res.send(err))
+  },
+  bulkCreatePangkalan: (req, res) => {
+    var result = []
+
+    dummy_pangkalan.map(pangkalan => {
+      Pangkalan.create(pangkalan)
+      .then(dataPangkalan => {
+        result.push(dataPangkalan)
+        if (result.length >= 2) {
+          res.send(result)
+        }
+      })
+      .catch(err => {
+        result.push(err)
+        if (result.length >= 2) {
+          res.send(err)
+        }
+      })
+    })
+  },
+  getAllPangkalan: (req, res) => {
+    Pangkalan.find()
+    .then(dataPangkalan => res.send(dataPangkalan))
+    .catch(err => res.send(err))
+  },
+  bulkDeletePangkalan: (req, res) => {
+    Pangkalan.remove({})
     .then(result => res.send(result))
     .catch(err => res.send(err))
   }
