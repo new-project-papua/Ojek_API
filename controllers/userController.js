@@ -77,13 +77,19 @@ module.exports = {
             birth_date: user.birth_date,
             email: user.email,
             phone: user.phone,
-            email_verified: user.email_verified,
-            phone_verified: user.phone_verified,
             username: user.username
           }, process.env.JWT_SECRET)
+
+          const dataUser = {
+            _id: user._id,
+            first_name: user.first_name,
+            last_name: user.last_name
+          }
+
           res.send({
             message: 'login success',
-            token: token
+            token: token,
+            data: dataUser
           })
         } else {
           res.send({
@@ -96,11 +102,8 @@ module.exports = {
   },
   all: (req, res) => {
     User.find()
-    .then(users => {
-      res.send({
-        message: 'data found',
-        data: users
-      })
+    .then(result => {
+      res.send(result)
     })
     .catch(err => res.send(err))
   },
@@ -109,10 +112,7 @@ module.exports = {
       _id: req.params._id
     })
     .then(user => {
-      res.send({
-        message: 'data found',
-        data: user
-      })
+      res.send(user)
     })
     .catch(err => res.send(err))
   },
@@ -151,12 +151,11 @@ module.exports = {
             password: hash
           })
           .then(result => {
-            res.send({
-              message: 'password updated',
-              data: result
-            })
+            res.send(result)
           })
           .catch(err => res.send(err))
+        } else {
+          res.send('old password incorrect')
         }
       })
     })
