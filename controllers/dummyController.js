@@ -46,6 +46,7 @@ const dummy_drivers = [
     phone_verified: true,
     sim_verified: true,
     stnk_verified: true,
+    pangkalan_verified: true,
     credit: 100000
   },
   {
@@ -63,6 +64,7 @@ const dummy_drivers = [
     phone_verified: true,
     sim_verified: true,
     stnk_verified: true,
+    pangkalan_verified: true,
     credit: 100000
   }
 ]
@@ -113,27 +115,32 @@ module.exports = {
     .catch(err => res.send(err))
   },
   bulkRegisterDriver: (req, res) => {
-    var result = []
-    dummy_drivers.map(driver => {
-      const salt = bcrypt.genSaltSync(10)
-      const hash = bcrypt.hashSync(driver.password, salt)
+    Pangkalan.find()
+    .then(pangkalan => {
+      var result = []
+      dummy_drivers.map((driver, idx) => {
+        const salt = bcrypt.genSaltSync(10)
+        const hash = bcrypt.hashSync(driver.password, salt)
 
-      driver.password = hash
+        driver.password = hash
+        driver.pangkalan = pangkalan[idx]._id
 
-      Driver.create(driver)
-      .then(dataDriver => {
-        result.push(dataDriver)
-        if (result.length >= 2) {
-          res.send(result)
-        }
-      })
-      .catch(err => {
-        result.push(err)
-        if (result.length >= 2) {
-          res.send(result)
-        }
+        Driver.create(driver)
+        .then(dataDriver => {
+          result.push(dataDriver)
+          if (result.length >= 2) {
+            res.send(result)
+          }
+        })
+        .catch(err => {
+          result.push(err)
+          if (result.length >= 2) {
+            res.send(result)
+          }
+        })
       })
     })
+    .catch(err => res.send(err))
   },
   getAllDriver: (req, res) => {
     Driver.find()
