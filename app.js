@@ -11,6 +11,7 @@ const index = require('./routes/index')
 const user = require('./routes/userRoutes')
 const driver = require('./routes/driverRoutes')
 const pangkalan = require('./routes/pangkalanRoutes')
+const transaction = require('./routes/transactionRoutes')
 const dummy = require('./routes/dummyRoutes')
 
 app.use(logger('dev'))
@@ -22,6 +23,7 @@ app.use('/', index)
 app.use('/user', user)
 app.use('/driver', driver)
 app.use('/pangkalan', pangkalan)
+app.use('/transaction', transaction)
 app.use('/dummy', dummy)
 
 module.exports = app
