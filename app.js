@@ -10,6 +10,7 @@ mongoose.connect(`${process.env.DB_HOST}/${process.env.DB_NAME}`, { useMongoClie
 const index = require('./routes/index')
 const user = require('./routes/userRoutes')
 const driver = require('./routes/driverRoutes')
+const pangkalan = require('./routes/pangkalanRoutes')
 const dummy = require('./routes/dummyRoutes')
 
 app.use(logger('dev'))
@@ -18,8 +19,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/', index)
-app.use('/users', user)
-app.use('/drivers', driver)
+app.use('/user', user)
+app.use('/driver', driver)
+app.use('/pangkalan', pangkalan)
 app.use('/dummy', dummy)
 
 module.exports = app
